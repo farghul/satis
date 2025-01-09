@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "satis-rebuild"
+  namespace: "b8a72a-prod"
+  labels:
+    app.kubernetes.io/component: satis-php
+    app.kubernetes.io/instance: satis
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: satis-php
+    helm.sh/chart: satis-php-0.0.1
+spec:
+  parallelism: 1
+  completions: 1
+  backoffLimit: 3
+  selector: {}
+  template:
+    spec:
+      volumes:
+        - name: "satis-php"
+          persistentVolumeClaim:
+            claimName: "satis-php"
+      containers:
+        - name: rebuild
+          image: 'ghcr.io/farghul/php:fpm-k8s'
+          args:
+            - /bin/sh
+            - '-c'
+            - "cd /data/apps/satis/install && php bin/satis build satis.json /data/apps/satis/repo"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          volumeMounts:
+            - name: "satis-php"
+              mountPath: "/data/apps/satis"
+              subPath: "satis"
+      restartPolicy: Never

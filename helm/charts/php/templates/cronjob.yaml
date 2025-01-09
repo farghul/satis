@@ -1,0 +1,47 @@
+{{- range $cronjob := $.Values.cronjobs }}
+
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ $cronjob.id }}
+  namespace: default
+  labels:
+    app.kubernetes.io/name: {{ $.Chart.Name | quote }}
+    app.kubernetes.io/component: {{ $.Chart.Name | quote }}
+    app.kubernetes.io/instance: {{ $.Release.Name | quote }}
+    app.kubernetes.io/managed-by: {{ $.Release.Service | quote }}
+    helm.sh/chart: "{{ $.Chart.Name }}-{{ $.Chart.Version }}"
+spec:
+  schedule: {{ $cronjob.schedule | quote }}
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+            - name: {{ $.Chart.Name | quote }}
+              persistentVolumeClaim:
+                claimName: {{ $.Chart.Name | quote }}
+          containers:
+            - name: cron-runner
+              image: {{ $.Values.global.image.repository }}php:fpm-k8s
+              args:
+                - /bin/sh
+                - '-c'
+                - {{ $cronjob.command }}
+              resources:
+                requests:
+                  cpu: {{ $.Values.resources.requests.cpu }}
+                  memory: {{ $.Values.resources.requests.memory }}
+                limits:
+                  cpu: {{ $.Values.resources.limits.cpu }}
+                  memory: {{ $.Values.resources.limits.memory }}
+              volumeMounts:
+                - mountPath: {{ $.Values.global.volumeMounts.mountPath | quote }}
+                  name: {{ $.Chart.Name | quote }}
+                  subPath: {{ $.Values.global.volumeMounts.subPath | quote }}
+          restartPolicy: OnFailure
+
+{{- end }}

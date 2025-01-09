@@ -1,0 +1,32 @@
+---
+labels:
+  version: 8.4
+  runtime: php
+service:
+  type: ClusterIP
+  port: 9000
+ports:
+  name: 9000-tcp
+  containerPort: 9000
+  protocol: TCP
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+cronjobs:
+  - id: composer-update
+    name: composer-update
+    command: "cd /data/apps/satis/install && composer update"
+    schedule: "@daily"
+  - id: composer-upgrade
+    name: composer-upgrade
+    command: "composer self-update"
+    schedule: "@weekly"
+  - id: satis-purge
+    name: satis-purge
+    command: "cd /data/apps/satis/install && php bin/satis purge satis.json /data/apps/satis/repo"
+    schedule: "@monthly"
+...
