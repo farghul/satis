@@ -10,7 +10,7 @@ spec:
   capacity:
     storage: 400Mi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   hostPath:
     path: {{ .Values.global.volumeMounts.mountPath | quote }}
 ...
