@@ -1,9 +1,12 @@
-FROM php:8.4-fpm
+ARG PHP
+ARG COMPOSER
 
-LABEL org.opencontainers.image.description="PHP-FPM for Satis in Kubernetes"
+FROM php:$PHP
 
 # Declare the base Composer version
-ENV COMPOSER_ROOT_VERSION='2.8.4'
+ENV COMPOSER_ROOT_VERSION=$COMPOSER
+
+LABEL org.opencontainers.image.description="PHP-FPM for Satis in Kubernetes"
 
 # Install Composer
 COPY --from=composer/composer:latest-bin /composer /usr/bin/composer
