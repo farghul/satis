@@ -1,6 +1,6 @@
 ---
 labels:
-  version: 1.27.3
+  version: latest
   runtime: nginx
 service:
   type: ClusterIP

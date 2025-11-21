@@ -26,8 +26,6 @@ NAMESPACE: The Kubernetes namespace
 
 ``` yaml
 ---
-FPM: php-fpm version
-COMPOSER: Composer version
 NGiNX: `[repo]/[name]:[version]` of the NGiNX image
 PHP: `[repo]/[name]:[version]` of the PHP image
 SELF: Path to the local clone of the wordpress repository
@@ -48,7 +46,7 @@ docker image tag [name]:latest [repo]/[name]:[version]
 docker push [repo]/[name]:[version]
 ```
 
-Or, using Ansible to automate the process:
+Or, using Ansible / Docker Bake to automate the process:
 
 ``` zsh
 ansible-playbook docker.yaml -i ~/inventory.yaml

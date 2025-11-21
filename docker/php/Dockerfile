@@ -1,10 +1,11 @@
-ARG PHP
-ARG COMPOSER
+ARG CRV
+ARG MEMV
+ARG PHPV
 
-FROM php:$PHP
+FROM php:${PHPV}
 
 # Declare the base Composer version
-ENV COMPOSER_ROOT_VERSION=$COMPOSER
+ENV COMPOSER_ROOT_VERSION=${CRV}
 
 LABEL org.opencontainers.image.description="PHP-FPM for Satis in Kubernetes"
 
@@ -20,7 +21,7 @@ RUN apt-get update && apt-get install -y \
 		libzip-dev \
         libmemcached-dev \
         libmemcached-tools \
-    && pecl install memcached-3.3.0 \
+    && pecl install memcached-${MEMV} \
     && docker-php-ext-enable memcached \
 	&& docker-php-ext-install -j$(nproc) zip \
 	&& mkdir -p /data/apps/satis

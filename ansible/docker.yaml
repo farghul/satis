@@ -5,36 +5,17 @@
   vars_files: defaults/main.yaml
   gather_facts: false
   tasks:
-    - name: Build the PHP image
+    - name: Build the Docker images
       tags: php
       block:
-        - name: Build the PHP image
+        - name: Run the docker-bake.hcl file
           ansible.builtin.command:
-            chdir: "{{ SELF }}/docker/php"
-            cmd: docker buildx build --file Dockerfile --tag php --build-arg COMPOSER={{ COMPOSER }} --build-arg PHP={{ FPM }} . --no-cache
-
-        - name: Tag the PHP build
-          ansible.builtin.command: docker image tag php:latest {{ PHP }}
-
-        - name: Push the PHP build to GitHub
-          ansible.builtin.command: docker push {{ PHP }}
-      rescue:
-        - name: Make sure all handlers run
-          meta: flush_handlers
-
-    - name: Build the NGiNX image
-      tags: nginx
-      block:
-        - name: Build the NGiNX image
-          ansible.builtin.command:
-            chdir: "{{ SELF }}/docker/nginx"
-            cmd: docker buildx build --file Dockerfile --tag nginx . --no-cache
-
-        - name: Tag the NGiNX build
-          ansible.builtin.command: docker image tag nginx:latest {{ NGiNX }}
-          
+            chdir: "{{ SELF }}/docker/"
+            cmd: docker buildx bake
         - name: Push the NGiNX build to GitHub
           ansible.builtin.command: docker push {{ NGiNX }}
+        - name: Push the PHP build to GitHub
+          ansible.builtin.command: docker push {{ PHP }}
       rescue:
         - name: Make sure all handlers run
           meta: flush_handlers

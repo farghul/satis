@@ -28,7 +28,7 @@ spec:
             name: config-satis-nginx
       containers:
         - name: {{ .Chart.Name | quote }}
-          image: {{ .Values.global.image.repository }}nginx:satis
+          image: {{ .Values.global.image.repository }}{{ .Values.labels.runtime }}:satis
           ports:
             - name: {{ .Values.ports.name }}
               containerPort: {{ .Values.ports.containerPort }}

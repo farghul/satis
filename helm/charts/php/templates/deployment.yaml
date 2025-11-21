@@ -24,7 +24,7 @@ spec:
             claimName: {{ .Chart.Name | quote }}
       containers:
         - name: {{ .Chart.Name | quote }}
-          image: {{ .Values.global.image.repository }}php:fpm-satis
+          image: {{ .Values.global.image.repository }}{{ .Values.labels.runtime }}:fpm-satis
           ports:
             - name: {{ .Values.ports.name }}
               containerPort: {{ .Values.ports.containerPort }}

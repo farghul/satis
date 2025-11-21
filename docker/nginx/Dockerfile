@@ -1,4 +1,6 @@
-FROM nginx:latest
+ARG NGiNX
+
+FROM nginx:${NGiNX}
 
 LABEL org.opencontainers.image.description="NGiNX proxy for Satis in Kubernetes"
 

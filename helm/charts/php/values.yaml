@@ -1,6 +1,6 @@
 ---
 labels:
-  version: 8.4
+  version: latest
   runtime: php
 service:
   type: ClusterIP
