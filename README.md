@@ -12,7 +12,9 @@ An [`auth.json`](https://getcomposer.org/doc/articles/authentication-for-private
 
 ### Ansible
 
-An `main.yaml` file in the `ansible/defaults` subdirectory:
+An [`~/inventory.yaml`](https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html) file for Ansible to reference the hosts value. (See link for reference)
+
+An `ansible/defaults/main.yaml` file containing variable declarations.
 
 ``` yaml
 ---
@@ -21,18 +23,6 @@ INSTALL: Path to the Satis installation
 NAMESPACE: The Kubernetes namespace
 ...
 ```
-
-#### Additional variables needed for Docker image creation
-
-``` yaml
----
-NGiNX: `[repo]/[name]:[version]` of the NGiNX image
-PHP: `[repo]/[name]:[version]` of the PHP image
-SELF: Path to the local clone of the wordpress repository
-...
-```
-
-An [`~/inventory.yaml`](https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html) file for Ansible to reference the hosts value. (See link for reference)
 
 ## Docker
 
@@ -77,3 +67,7 @@ Finally, to automate the Satis instalation process, navigate to the `ansible` fo
 ``` zsh
 ansible-playbook playbook.yaml -i ~/inventory.yaml
 ```
+
+## License
+
+Code is distributed under [The Unlicense](https://bitbucket.org/bc-gov/desso-satis/src/main/LICENSE.md "Unlicense Yourself, Set Your Code Free") and is part of the Public Domain.

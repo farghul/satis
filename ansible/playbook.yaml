@@ -33,17 +33,17 @@
 
         - name: Replace the homepage placeholder with the actual url
           ansible.builtin.lineinfile:
-            path: 'assets/satis.json'
+            path: "assets/satis.json"
             search_string: '"homepage":'
             line: '    "homepage": "{{ nodeport.stdout }}",'
-            mode: '0644'
+            mode: "0644"
 
         - name: Replace the prefix-url placeholder with the actual url
           ansible.builtin.lineinfile:
-            path: 'assets/satis.json'
+            path: "assets/satis.json"
             search_string: '"prefix-url":'
             line: '        "prefix-url": "{{ nodeport.stdout }}",'
-            mode: '0644'
+            mode: "0644"
 
         - name: Copy the satis.json
           ansible.builtin.command: kubectl cp assets/satis.json {{ NAMESPACE }}/{{ podname }}:{{ INSTALL }}
@@ -58,17 +58,16 @@
           ansible.builtin.command: kubectl exec {{ podname }} -- bash -c "cd {{ INSTALL }} && php bin/satis build satis.json {{ REPO }}"
 
         - name: Copy the favicon
-          ansible.builtin.command: kubectl cp assets/favicon.ico {{ NAMESPACE }}/{{ podname }}:{{ REPO }}
+          ansible.builtin.command: kubectl cp icons/favicon.ico {{ NAMESPACE }}/{{ podname }}:{{ REPO }}
 
         - name: Copy the apple-touch-icon
-          ansible.builtin.command: kubectl cp assets/apple-touch-icon.png {{ NAMESPACE }}/{{ podname }}:{{ REPO }}
+          ansible.builtin.command: kubectl cp icons/apple-touch-icon.png {{ NAMESPACE }}/{{ podname }}:{{ REPO }}
 
         - name: Copy the apple-touch-icon-precomposed
-          ansible.builtin.command: kubectl cp assets/apple-touch-icon-precomposed.png {{ NAMESPACE }}/{{ podname }}:{{ REPO }}
+          ansible.builtin.command: kubectl cp icons/apple-touch-icon-precomposed.png {{ NAMESPACE }}/{{ podname }}:{{ REPO }}
 
     - name: Check for updates to the default Composer installation
       tags: composer
       block:
         - name: Update the Composer installation
           ansible.builtin.command: kubectl exec {{ podname }} -- bash -c "cd {{ INSTALL }} && composer update"
-...

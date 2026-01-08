@@ -1,8 +1,37 @@
-compose.yaml
-docker-compose.yaml
+# Exclude git history and configuration.
 .git
+.github
+.gitignore
+.gitkeep
 .gitmodules
+
+# Exclude cache files
 .cache
-*.md
+
+# Generated files
+.DS_Store
+._.DS_Store
+.idea
+.Trashes
+.vscode
+Desktop.ini
+ehthumbs.db
+Thumbs.db
 **/*.class
+*.gem
+*.lock
 *.iso
+*.tmp
+*~
+
+# Exclude environment files
+.env
+.env.*
+
+# Exclude log files
+*.log
+
+# Exclude project specific files
+NOTICE
+Makefile
+*.md
