@@ -21,6 +21,11 @@ An `ansible/defaults/main.yaml` file containing variable declarations.
 REPO: Path to the Satis repository
 INSTALL: Path to the Satis installation
 NAMESPACE: The Kubernetes namespace
+
+# Additional variables needed for Docker image creation
+SELF: Local repository location
+NGiNX: ghcr.io/username/tag:version
+PHP: ghcr.io/username/tag:version
 ...
 ```
 

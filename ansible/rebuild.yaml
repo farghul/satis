@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: "satis-rebuild"
-  namespace: "b8a72a-prod"
+  namespace: "{{ NAMESPACE }}"
   labels:
     app.kubernetes.io/component: satis-php
     app.kubernetes.io/instance: satis
@@ -22,11 +22,11 @@ spec:
             claimName: "satis-php"
       containers:
         - name: rebuild
-          image: 'ghcr.io/farghul/php:fpm-k8s'
+          image: "{{ PHP }}"
           args:
             - /bin/sh
-            - '-c'
-            - "cd /data/apps/satis/install && php bin/satis build satis.json /data/apps/satis/repo"
+            - "-c"
+            - "cd {{ INSTALL }} && php bin/satis build satis.json {{ REPO }}"
           resources:
             requests:
               cpu: 100m
