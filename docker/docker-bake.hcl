@@ -7,7 +7,7 @@ group "default" {
 }
 
 target "nginx" {
-  context = "./nginx"
+  context = "nginx"
   dockerfile = "Dockerfile"
   args = {
     NGiNX = "1.30.0"
@@ -16,7 +16,7 @@ target "nginx" {
 }
 
 target "php" {
-  context = "./php"
+  context = "php"
   dockerfile = "Dockerfile"
   args = {
     CRV = "2.9.7"
