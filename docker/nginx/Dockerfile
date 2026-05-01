@@ -2,11 +2,11 @@ ARG NGiNX
 
 FROM nginx:${NGiNX}
 
-LABEL org.opencontainers.image.description="NGiNX proxy for Satis in Kubernetes"
+LABEL org.opencontainers.image.description="NGiNX proxy for Satis"
 
 # Install the GNU Compiler Collection
 RUN apt-get update && apt-get install -y \
-        gcc mono-mcs \
+    gcc mono-mcs \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the NGiNX configuration files
